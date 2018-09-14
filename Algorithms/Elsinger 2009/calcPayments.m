@@ -1,9 +1,6 @@
 %% calcPayments
 % Computes a clearing payment matrix for a given financial system, using
-% the Elsinger 2009 methodology with seniority structure. 
-%
-% Elsinger, H. (2009). Financial networks, cross holdings, and limited
-% liability. Oesterreichische Nationalbank Working Paper 156
+% the Elsinger 2009 methodology with seniority structure.
 %
 % *Inputs*
 %
@@ -16,7 +13,11 @@
 %
 % * matP: clearing payment matrix (banks * seniorities)
 % * vecEquityAfterContagion: equity values after contagion
+% * matTheta: matrix (banks x banks x seniorities) of interbank holdings
 % * vecDefaultedBanks: boolean vector (banks x 1), 1 if bank has defaulted
+
+% Authors: Matias Puig and Christoph Siebenbrunner
+% Last modified: 18.06.2018
 %
 
 function [matP, vecEquity, vecDefaultedBanks] = calcPayments(vecE,matL,matTheta)
@@ -31,10 +32,7 @@ vecH = ones(numBanks,1) * numSeniority;
 blnloop = true;
 matLH = zeros(numBanks);
 matPi = matL;
-matPbar = zeros(numBanks,numSeniority);
-for s=1:numSeniority
-    matPbar(:,s) = matPbar(:,s) + sum(matL(:,:,s),2);
-end
+matPbar = squeeze(sum(matL,2));
 for s=1:numSeniority
     matPi(:,:,s) = matL(:,:,s) ./ repmat(matPbar(:,s),1,numBanks);
 end
@@ -42,6 +40,7 @@ matPi(isnan(matPi)) = 0;
 
 %% Compute clearing payment vector
 % Use Elsinger 2009 algorithm with seniority structure
+matP = matPbar;
 
 while blnloop
     % define vector vecEH
@@ -66,47 +65,39 @@ while blnloop
             matLH(i,j) = matL(i,j,vecH(i));
         end
     end
+    vecPbarH = sum(matLH,2);
     
-            
-    [vecP,vecEquity] = calcElsinger(vecEH,matLH, matTheta);
-    blnDefault = vecEquity < 0 & vecH>1; 
+    [vecP,vecEquity] = calcPaymentsOneLayer(vecEH,matLH, matTheta);
+    blnDefault = vecEquity < 0 & vecH>1;
     vecDefaultedBanks = vecDefaultedBanks | blnDefault;
     
     if (blnDefault == zeros(numBanks,1))
         blnloop = false;
     end
     
-
-    % update variables 
-    vecH = vecH - blnDefault;
-
-matP = zeros(numBanks, numSeniority);
-
-for i=1:numBanks
-    for s = 1:numSeniority
-        if(vecH(i) > s) 
-            matP(i,s) = matPbar(i,s);
-        end
-        if(vecH(i) == s)
-            matP(i,s) = vecP(i);
-        end
-        if(vecH(i) < s)
-            matP(i,s) = 0;
+    for r = 1:numBanks
+        if vecP(r) < vecPbarH(r)
+            lastfullypaidseniority = vecH(r);
+            for c = 1:numSeniority
+                if c == lastfullypaidseniority
+                    matP(r,c) = vecP(r);
+                elseif c > lastfullypaidseniority
+                    matP(r,c) = 0;
+                end
+            end
         end
     end
-end
-
-% compute equity vector 
-
-vecEquity = vecE; 
-for s=1:numSeniority
-    vecEquity = vecEquity + matPi(:,:,s)'*matP(:,s) - matPbar(:,s);
-end
-
-vecEquity = vecEquity + max(0,matTheta' * vecEquity);  
-
-
-
-
+    
+    % update variables
+    vecH = vecH - blnDefault;
+    
+    % compute equity vector
+    
+    vecEquity = vecE;
+    for s=1:numSeniority
+        vecEquity = vecEquity + matPi(:,:,s)'*matP(:,s) - matPbar(:,s);
+    end
+    
+    vecEquity = vecEquity + max(0,matTheta' * vecEquity);
 end
 
