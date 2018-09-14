@@ -11,8 +11,8 @@ If you are familiar with git, fork or clone the repository, otherwise use the do
 ### Algorithms
 The algorithms are organized into folders, which act as separately functionable code bases. Selecting the appropriate algorithm for your problem requires some familiarity with the literature. Currently the following algorithms are implemented (in chronological order, which roughly corresponds to an increasing order of complexity):
 
-* [Eisenberg and Noe (2001)]: computes payoffs for one layer of debt contracts without equity participations
-* [Elsinger (2009)]: extends the Eisenberg/Noe-model to include several seniority layers of debt and equity participations.
+* [Eisenberg and Noe (2001)]: computes payoffs for one layer of debt contracts without equity participations.
+* [Elsinger (2009)]: extends the Eisenberg/Noe-model to include equity participations and several seniority layers of debt.
 * [Rogers and Veraart (2013)]: extends the Eisenberg/Noe-model to include liquidation haircuts.
 * [Puig and Siebenbrunner (2018)]: extends the Elsinger-model to include bail-ins and contingent convertible debt securities.
 
@@ -33,6 +33,13 @@ We invite other researchers to contribute their algorithms to the repository, so
 
 ## License and scholarly attribution
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details. If used in acadmic works, please cite the companion paper [Puig and Siebenbrunner (2018)], in addition to the original paper, depending on which algorithm is used (*note*: we will update the attribution framework if routines are added by other researchers).
+
+## References
+Barucca, P., Bardoscia, M., Caccioli, F., D'Errico, M., Visentin, G., Battiston, S., & Caldarelli, G. (2016). Network valuation in financial systems. SSRN Working Paper
+Eisenberg, L., & Noe, T. H. (2001). Systemic risk in financial systems. Management Science, 47(2), 236-249.
+Elsinger, H. (2009). Financial networks, cross holdings, and limited liability. Oesterreichische Nationalbank Working Paper 156
+Rogers, L. C., & Veraart, L. A. (2013). Failure and rescue in an interbank network. Management Science, 59(4), 882-898.
+Puig, M., & Siebenbrunner, C. (2018) Multilayer network valuation with equity conversions. Working Paper
 
 [Eisenberg and Noe (2001)]: https://doi.org/10.1287/mnsc.47.2.236.9835 "Systemic risk in financial systems"
 [Elsinger (2009)]: https://www.researchgate.net/profile/Helmut_Elsinger/publication/46467874_Financial_Networks_Cross_Holdings_and_Limited_Liability/links/0912f50aa0a35b07b5000000/Financial-Networks-Cross-Holdings-and-Limited-Liability.pdf "Financial networks, cross holdings, and limited liability"
