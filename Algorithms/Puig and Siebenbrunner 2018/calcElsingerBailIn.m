@@ -25,7 +25,9 @@
 % * vecDefaultedBanks: boolean vector (banks x 1), 1 if bank has defaulted
 % * vecBailedInBanks: boolean vector (banks x 1), 1 if bank has been
 %                     bailed-in
-% 
+% Authors: Dissertation candidate and supervisor
+% Last modified: 18.06.2018
+%
 
 function [matP, vecEquity, matTheta, vecDefaultedBanks, vecBailedInBanks] = calcElsingerBailIn(vecE,matL, matTheta, numK, funConversion, vecLambdaB, vecLambdaR)
 
@@ -102,7 +104,7 @@ while blnLoop
              end
      end
          
-     vecFbar = sum(sum(matF, 3),3);
+     vecFbar = sum(sum(matF, 3),2);
      
      
      
