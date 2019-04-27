@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="MATLAB R2017b"><meta http-equiv="X-UA-Compatible" content="IE=edge,IE=9,chrome=1"><title>Demonstration of the Eisenberg/Noe Algorithm</title><style type="text/css">
+* {margin: 0; padding: 0;}
+body {text-align: start; line-height: 17.2339992523193px; min-height: 0px; white-space: normal; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-style: normal; font-size: 14px; font-weight: normal; text-decoration: none; white-space: normal; }
+h1, h2 {font-weight: normal;}
+.content { padding: 30px; }
+
+.S0 { margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S1 { text-align: left; line-height: 26.3999996185303px; min-height: 24px; white-space: pre-wrap; color: rgb(213, 80, 0); font-family: Helvetica, Arial, sans-serif; font-size: 22px; white-space: pre-wrap; margin-left: 4px; margin-top: 3px; margin-bottom: 15px; margin-right: 10px;  }
+.S2 { min-height: 0px; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S3 { text-align: left; line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 2px; margin-bottom: 9px; margin-right: 10px;  }
+.S4 { margin-left: 3px; margin-top: 10px; margin-bottom: 10px; margin-right: 3px;  }
+.S5 { min-height: 18px; white-space: nowrap; white-space: nowrap; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S6 { min-height: 0px; white-space: pre; white-space: pre; margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 45px;  }
+.S7 { text-align: left; line-height: 21px; min-height: 17px; white-space: pre-wrap; font-family: Helvetica, Arial, sans-serif; white-space: pre-wrap; margin-left: 4px; margin-top: 10px; margin-bottom: 9px; margin-right: 10px;  }
+.S8 { color: rgb(160, 32, 240); margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S9 { color: rgb(64, 64, 64); margin-left: 0px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;  }
+.S10 { margin-left: 3px; margin-top: 10px; margin-bottom: 4px; margin-right: 3px;  }
+
+.CodeBlock {margin: 10px 0 10px 0; background-color: #F7F7F7;}
+.CodeBlock+.paragraphNode {margin-top: 10px;}
+.lineNode {padding-left: 10px; border-left: 1px solid #E9E9E9; border-right: 1px solid #E9E9E9;}
+.inlineWrapper:first-child .lineNode,.inlineWrapper.outputs+.inlineWrapper .lineNode {padding-top: 5px; border-top: 1px solid #E9E9E9;}
+.inlineWrapper:last-child .lineNode,.inlineWrapper.outputs .lineNode {padding-bottom: 5px; border-bottom: 1px solid #E9E9E9;}
+.lineNode .textBox {white-space: pre;}
+.outputGroup {margin: 2px 0 2px 0; padding: 2px 2px 2px 4px;}
+.outputRegion {}
+.outputParagraph {color: rgba(64, 64, 64, 1); padding: 10px 0 6px 17px; background: white; overflow-x: hidden;}
+.inlineWrapper:last-child .outputParagraph {border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;}
+.outputParagraph:empty {margin: 0;}
+.inlineElement .symbolicElement {margin-top: 1px; margin-bottom: 1px;}
+.embeddedOutputsSymbolicElement .MathEquation {margin-top: 4px; margin-bottom: 4px;}
+.embeddedOutputsSymbolicElement .MathEquation.displaySymbolicElement {margin-left: 15px;}
+.embeddedOutputsSymbolicElement .MathEquation.inlineSymbolicElement {}
+.embeddedOutputsSymbolicElement {overflow-x: auto; overflow-y: auto;}
+.embeddedOutputsSymbolicElement { overflow: initial !important;}
+.embeddedOutputsTextElement,.embeddedOutputsVariableStringElement {white-space: pre; word-wrap: initial; min-height: 18px; max-height: 250px; overflow: auto;}
+.textElement,.rtcDataTipElement .textElement {padding-top: 3px;}
+.embeddedOutputsTextElement.inlineElement,.embeddedOutputsVariableStringElement.inlineElement {}
+.inlineElement .textElement {}
+.embeddedOutputsTextElement,.embeddedOutputsVariableStringElement { max-height: none !important; overflow: initial !important;}
+.veSpecifier {}
+.veContainer {}
+.veSpecifierBox {height: 400px; width: 500px;}
+.veSpecifier .veTable {padding-top: 3px; padding-bottom: 4px;}
+.veSpecifierBox .veSpecifier .veContainer {position: relative; width: 100%; height: 370px;}
+.veSpecifierBox .dijitDialogPaneContent {width: 97% !important; height: 88% !important;}
+.veSpecifier .veTable .rowHeadersWrapper {padding-bottom: 0;}
+.veSpecifier .veTable .scroller .variableEditorRenderers {padding-right: 3px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;}
+.veSpecifier .veTable .topHeaderWrapper,.veSpecifier .veTable .bottomRowHeaderWrapper {visibility: hidden; z-index: 0;}
+.veMetaSummary {font-style: italic;}
+.veSpecifier .veTable .scroller {overflow: hidden;}
+.veSpecifier .veTable:hover .scroller {overflow: auto;}
+.veSpecifier .veVariableName,.veSpecifier .veDimensionFont {font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 12px;}
+.veSpecifier .veVariableName {padding-top: 2px;}
+.veSpecifier .veDimensionFont {font-style: italic; color: #9A9A9A;}
+.veSpecifier .scroller::-webkit-scrollbar-track {background-color: white;}
+.veSpecifier .scroller::-webkit-scrollbar-corner {background-color: white;}
+.veSpecifier .veTable .topRowHeaderWrapper {border: none; background-color: #F8F9FA;}
+.veSpecifier .mw_type_ListBase.showCellBorders,.veSpecifier .veTable .topHeaderWrapper,.veSpecifier .veTable .bottomRowHeaderWrapper,.veSpecifier .veTable .verticalScrollSpacer,.veSpecifier .veTable .horizontalScrollSpacer {border: none;}
+.veSpecifier .veTable .dataScrollerNode {border: 1px solid #BFBFBF;}
+.veSpecifier .veTable .columnHeaderNode,.veSpecifier .veTable .rowHeaderNode,.veSpecifier .veTable .dataBody {font-family: Arial; font-size: 13px;}
+.veSpecifier .veTable .columnHeaderNode,.veSpecifier .veTable .rowHeaderNode {color: #7F7F7F;}
+.veSpecifier .veTable .dataBody {color: #000000;}
+.veSpecifier .veTable .columnHeaderNode .cell .drag,.veSpecifier .veTable .columnHeaderNode .cell .header,.veSpecifier .veTable .topHeaderWrapper,.veSpecifier .veTable .bottomRowHeaderWrapper {background-color: #F8F9FA;}
+.veSpecifier .veTable .columnHeaderNode .cell .dragBorder {border-right: 1px solid #F8F9FA;}
+.veSpecifier .veTable .rowHeaderNode .cell {padding-top: 3px; text-align: center; border-bottom: 1px solid #F8F9FA;}
+.veSpecifier .veTable .dataBody .cell .plainText {text-align: right;}
+.veSpecifier .veTable .dataBody .row .cell {border-bottom: 1px solid #E9E9E9; border-right: 1px solid #E9E9E9;}
+.embeddedOutputsVariableElement {white-space: pre-wrap; word-wrap: break-word; min-height: 18px; max-height: 250px; overflow: auto;}
+.variableElement {}
+.embeddedOutputsVariableElement.inlineElement {}
+.inlineElement .variableElement {}
+.variableNameElement {margin-bottom: 3px; display: inline-block;}
+.variableValue { width: 100% !important; }
+.embeddedOutputsMatrixElement {min-height: 18px; box-sizing: border-box;}
+.embeddedOutputsMatrixElement .matrixElement,.rtcDataTipElement .matrixElement {position: relative;}
+.matrixElement .variableValue,.rtcDataTipElement .matrixElement .variableValue {white-space: pre; display: inline-block; vertical-align: top; overflow: hidden;}
+.embeddedOutputsMatrixElement.inlineElement {}
+.embeddedOutputsMatrixElement.inlineElement .topHeaderWrapper {display: none;}
+.embeddedOutputsMatrixElement.inlineElement .veTable .body {padding-top: 0 !important; max-height: 100px;}
+.inlineElement .matrixElement {max-height: 300px;}
+.embeddedOutputsMatrixElement .matrixElement .valueContainer,.rtcDataTipElement .matrixElement .valueContainer {white-space: nowrap; margin-bottom: 3px;}
+.embeddedOutputsMatrixElement .matrixElement .valueContainer .horizontalEllipsis.hide,.embeddedOutputsMatrixElement .matrixElement .verticalEllipsis.hide,.rtcDataTipElement .matrixElement .valueContainer .horizontalEllipsis.hide,.rtcDataTipElement .matrixElement .verticalEllipsis.hide {display: none;}
+.embeddedOutputsMatrixElement .matrixElement .valueContainer .horizontalEllipsis {margin-bottom: -3px;}
+.matrixElement { max-height: none !important; }
+.embeddedOutputsVariableTableElement .ClientViewDiv table tr {height: 22px; white-space: nowrap;}
+.embeddedOutputsVariableTableElement .ClientViewDiv table thead tr th {border-width: 1px 0px 1px 1px;}
+.embeddedOutputsVariableTableElement .ClientViewDiv table {border-spacing: 0px; border: 1px solid #bfbfbf; border-width: 0px 1px 0px 0px;}
+.embeddedOutputsVariableTableElement .ClientViewDiv table tr td,.embeddedOutputsVariableTableElement .ClientViewDiv table tr th {min-width : 75px; max-width : 75px; background-color:white; border: 1px solid #bfbfbf; text-overflow: ellipsis; border-width: 0px 0px 1px 1px; font-family: 'Arial', sans-serif; font-size: 12px; overflow : hidden;}
+.embeddedOutputsVariableTableElement .ClientViewDiv table tbody tr th {width: 34px; max-width: 100px;}
+.embeddedOutputsVariableTableElement .ClientViewDiv table tr span {text-overflow: ellipsis; padding: 3px;}
+.embeddedOutputsVariableTableElement .ClientViewDiv table tr th {background: #f5f5f5; color: rgba(0,0,0,0.5); padding: 3px; font-size: 9px;}
+.embeddedOutputsVariableTableElement .ClientViewDiv table tr th:first-child {min-width: 28px; max-width: 250px;}
+.dijitTooltipDialog .dijitTooltipContainer .dijitTooltipContents .alertPlugin-alertMessage {min-width: 12px; max-width: 400px; max-height: 300px; overflow: auto;}
+.dijitTooltipDialog .alertPlugin-alertMessage::-webkit-scrollbar {width: 11px; height: 11px;}
+.dijitTooltipDialog .alertPlugin-alertMessage::-webkit-scrollbar-track {background-color: rgba(0, 0, 0, 0);}
+.dijitTooltipDialog .alertPlugin-alertMessage::-webkit-scrollbar-corner {background-color: rgba(0, 0, 0, 0);}
+.dijitTooltipDialog .alertPlugin-alertMessage::-webkit-scrollbar-thumb {border-radius: 7px; background-color: rgba(0, 0, 0, 0.1); border: 2px solid rgba(0, 0, 0, 0); background-clip: padding-box;}
+.dijitTooltipDialog .alertPlugin-alertMessage::-webkit-scrollbar-thumb:hover {background-color: rgba(0, 0, 0, 0.2);}
+.dijitTooltipDialog .alertPlugin-alertMessage::-webkit-scrollbar-thumb {background-color: rgba(0, 0, 0, 0);}
+.dijitTooltipDialog .alertPlugin-alertMessage:hover::-webkit-scrollbar-thumb {background-color: rgba(0, 0, 0, 0.1);}
+.dijitTooltipDialog .alertPlugin-alertMessage:hover::-webkit-scrollbar-thumb:hover {background-color: rgba(0, 0, 0, 0.2);}
+.alertPlugin-alertLine {position: absolute; display: initial; width: 40px; text-align: right; cursor: text;}
+.alertPlugin-onTextLine {visibility: hidden;}
+.alertPlugin-hasTooltip .alertPlugin-warningImg,.alertPlugin-hasTooltip .alertPlugin-errorImg {cursor: pointer;}
+.alertPlugin-alertLine .alertPlugin-warningElement,.alertPlugin-alertLine .alertPlugin-errorElement {display: inline-block; margin-right: 4px;}
+.alertPlugin-isStale {-webkit-filter: opacity(0.4) grayscale(80%); filter: opacity(0.4) grayscale(80%);}
+.diagnosticMessage-wrapper {font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 12px;}
+.diagnosticMessage-wrapper.diagnosticMessage-warningType {color: rgb(255,100,0);}
+.diagnosticMessage-wrapper.diagnosticMessage-warningType a {color: rgb(255,100,0); text-decoration: underline;}
+.diagnosticMessage-wrapper.diagnosticMessage-errorType {color: rgb(230,0,0);}
+.diagnosticMessage-wrapper.diagnosticMessage-errorType a {color: rgb(230,0,0); text-decoration: underline;}
+.diagnosticMessage-wrapper .diagnosticMessage-messagePart {white-space: pre-wrap;}
+.diagnosticMessage-wrapper .diagnosticMessage-stackPart {white-space: pre;}
+.embeddedOutputsWarningElement{min-height: 18px; max-height: 250px; overflow: auto;}
+.embeddedOutputsWarningElement.inlineElement {}
+.embeddedOutputsErrorElement {min-height: 18px; max-height: 250px; overflow: auto;}
+.embeddedOutputsErrorElement.inlineElement {}
+.variableNameElement .headerElement {color: rgb(179, 179, 179); font-style: italic;}
+.variableNameElement .headerElement .headerDataType {color: rgb(147, 176, 230);}
+.matrixElement .horizontalEllipsis,.rtcDataTipElement .matrixElement .horizontalEllipsis {display: inline-block; margin-top: 3px; content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAJCAYAAADO1CeCAAAAJUlEQVR42mP4//8/A70xw0i29BUDFPxnAEtTW37wWDqakIa4pQDvOOG89lHX2gAAAABJRU5ErkJggg==");}
+.matrixElement .verticalEllipsis,.textElement .verticalEllipsis,.rtcDataTipElement .matrixElement .verticalEllipsis,.rtcDataTipElement .textElement .verticalEllipsis {margin-left: 35px; content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAZCAYAAAAIcL+IAAAALklEQVR42mP4//8/AzGYgWyFMECMwv8QddRS+P//KyimlmcGUOFoOI6GI/UVAgDnd8Dd4+NCwgAAAABJRU5ErkJggg==");}
+</style></head><body><div class = "content"><div class = 'SectionBlock containment active'><h1 class = "S1"><span class = "S2"><span class="S0">Demonstration of the Eisenberg/Noe Algorithm</span></span></h1><div class = "S3"><span class = "S2"><span class="S0">We start by initializing a simple system of three nodes:</span></span></div><div class = 'CodeBlock contiguous'><div class = 'inlineWrapper'><div class = "S5 lineNode"><span class = "S6"><span class="S0">vecE = [10;10;10];</span></span></div></div><div class = 'inlineWrapper'><div class = "S5 lineNode"><span class = "S6"><span class="S0">matL = [0 20 10;5 0 24;10 0 0];</span></span></div></div></div><div class = "S7"><span class = "S2"><span class="S0">We see that, before clearing, only the first node is in default:</span></span></div><div class = 'CodeBlock contiguous'><div class = 'inlineWrapper'><div class = "S5 lineNode"><span class = "S6"><span class="S0">vecPbar = sum(matL,2);</span></span></div></div><div class = 'inlineWrapper'><div class = "S5 lineNode"><span class = "S6"><span class="S0">matPi = matL ./ repmat(vecPbar,1,length(vecE));</span></span></div></div><div class = 'inlineWrapper'><div class = "S5 lineNode"><span class = "S6"><span class="S0">vecEquity = vecE + matPi'*vecPbar - vecPbar;</span></span></div></div><div class = 'inlineWrapper'><div class = "S5 lineNode"><span class = "S6"><span class="S0"></span></span></div></div><div class = 'inlineWrapper'><div class = "S5 lineNode"><span class = "S6"><span class="S0">disp([{</span><span class="S8">'Equity before clearing' 'Defaulted'</span><span class="S0">};</span></span></div></div><div class = 'inlineWrapper outputs'><div class = "S5 lineNode"><span class = "S6"><span class="S0">    num2cell([vecEquity vecEquity &lt; 0])])</span></span></div><div class="outputParagraph" style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 14px;"><div class="inlineElement eoOutputWrapper embeddedOutputsTextElement" uid="573115C0" data-testid="output_0" data-width="1153" data-height="59" style="width: 1183px; max-height: 261px; white-space: pre; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="textElement" style="white-space: pre; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;">    'Equity before clearing'    'Defaulted'
+    [                    -5]    [        1]
+    [                     1]    [        0]
+    [                    34]    [        0]</div></div></div></div></div><div class = "S7"><span class = "S2"><span class="S0">We compute the clearing payment vector and see that all nodes face losses due to contagion, and that the second node is pushed into default through these losses:</span></span></div><div class = 'CodeBlock contiguous'><div class = 'inlineWrapper'><div class = "S5 lineNode"><span class = "S6"><span class="S0">vecPayments = calcPayments(vecE,matL);</span></span></div></div><div class = 'inlineWrapper'><div class = "S5 lineNode"><span class = "S6"><span class="S0">vecEquityNew = vecE + matPi'*vecPayments - vecPbar;</span></span></div></div><div class = 'inlineWrapper'><div class = "S5 lineNode"><span class = "S6"><span class="S0"></span></span></div></div><div class = 'inlineWrapper'><div class = "S5 lineNode"><span class = "S6"><span class="S0">disp([{</span><span class="S8">'Equity after clearing' 'Defaulted'</span><span class="S0">};</span></span></div></div><div class = 'inlineWrapper outputs'><div class = "S5 lineNode"><span class = "S6"><span class="S0">    num2cell([vecEquityNew vecPayments &lt; vecPbar])])</span></span></div><div class="outputParagraph" style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 14px;"><div class="inlineElement eoOutputWrapper embeddedOutputsTextElement" uid="BE077DEC" data-testid="output_1" data-width="1153" data-height="59" style="width: 1183px; max-height: 261px; white-space: pre; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="textElement" style="white-space: pre; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;">    'Equity after clearing'    'Defaulted'
+    [              -5.4545]    [        1]
+    [              -2.6364]    [        1]
+    [                   30]    [        0]</div></div></div></div></div><div class = "S7"><span class = "S2"><span class="S0">We can now also simulate payoffs under stochastic paths for external assets, seeing that the first two agents repay their liabilities in full in some paths and default in the median path, the third agent never defaults in this model.</span></span></div><div class = 'CodeBlock contiguous'><div class = 'inlineWrapper'><div class = "S5 lineNode"><span class = "S6"><span class="S0">vecMu = [0.3;0.1;0.1];</span></span></div></div><div class = 'inlineWrapper'><div class = "S5 lineNode"><span class = "S6"><span class="S0">matCovariance = [1 0 0;0 1 0;0 0 1];</span></span></div></div><div class = 'inlineWrapper'><div class = "S5 lineNode"><span class = "S6"><span class="S0">numSimulations = 1000;</span></span></div></div><div class = 'inlineWrapper'><div class = "S5 lineNode"><span class = "S6"><span class="S0">matValuations = calcValuations(vecE,vecMu,matCovariance,matL,numSimulations);</span></span></div></div><div class = 'inlineWrapper outputs'><div class = "S5 lineNode"><span class = "S6"><span class="S0">boxplot(matValuations')</span></span></div><div class="outputParagraph" style="white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 14px;"><div class="inlineElement eoOutputWrapper embeddedOutputsFigure" uid="89E53C6A" data-testid="output_2" style="width: 1183px; white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="figureElement" style="cursor: default; white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="figureContainingNode" style="width: 560px; max-width: 100%; display: inline-block; white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><div class="GraphicsView" data-dojo-attach-point="graphicsViewNode,backgroundColorNode" id="dijit__TemplatedMixin_32" widgetid="dijit__TemplatedMixin_32" style="width: 100%; height: auto; white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"><img class="ImageView figureImage" data-dojo-attach-point="imageViewNode" draggable="false" id="dijit__TemplatedMixin_34" widgetid="dijit__TemplatedMixin_34" src="data:image/png;base64,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" style="width: 100%; height: auto; white-space: normal; font-style: normal; color: rgb(64, 64, 64); font-size: 12px;"></div></div></div></div></div></div></div></div></div>
+<!-- 
+##### SOURCE BEGIN #####
+%% Demonstration of the Eisenberg/Noe Algorithm
+% We start by initializing a simple system of three nodes:
+
+vecE = [10;10;10];
+matL = [0 20 10;5 0 24;10 0 0];
+%% 
+% We see that, before clearing, only the first node is in default:
+
+vecPbar = sum(matL,2);
+matPi = matL ./ repmat(vecPbar,1,length(vecE));
+vecEquity = vecE + matPi'*vecPbar - vecPbar;
+
+disp([{'Equity before clearing' 'Defaulted'};
+    num2cell([vecEquity vecEquity < 0])])
+%% 
+% We compute the clearing payment vector and see that all nodes face losses 
+% due to contagion, and that the second node is pushed into default through these 
+% losses:
+
+vecPayments = calcPayments(vecE,matL);
+vecEquityNew = vecE + matPi'*vecPayments - vecPbar;
+
+disp([{'Equity after clearing' 'Defaulted'};
+    num2cell([vecEquityNew vecPayments < vecPbar])])
+%% 
+% We can now also simulate payoffs under stochastic paths for external assets, 
+% seeing that the first two agents repay their liabilities in full in some paths 
+% and default in the median path, the third agent never defaults in this model.
+
+vecMu = [0.3;0.1;0.1];
+matCovariance = [1 0 0;0 1 0;0 0 1];
+numSimulations = 1000;
+matValuations = calcValuations(vecE,vecMu,matCovariance,matL,numSimulations);
+boxplot(matValuations')
+##### SOURCE END #####
+--></body></html>

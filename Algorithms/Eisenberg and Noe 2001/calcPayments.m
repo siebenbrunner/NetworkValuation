@@ -14,9 +14,7 @@
 %
 % *Outputs*
 %
-% * vecP: clearing payment vector
-% * vecEAfterContagion: value of other assets after haircuts
-% * vecEquityAfterContagion: equity values after haircuts and contagion
+% * vecPayments: clearing payment vector
 %
 
 function vecPayments = calcPayments(vecE,matL,strCalculationMethod)
