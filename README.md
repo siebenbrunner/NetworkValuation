@@ -35,10 +35,10 @@ We invite other researchers to contribute their algorithms to the repository, so
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details. If used in acadmic works, please cite the companion paper [Puig and Siebenbrunner (2018)], in addition to the original paper, depending on which algorithm is used (*note*: we will update the attribution framework if routines are added by other researchers).
 
 ## References
-Barucca, P., Bardoscia, M., Caccioli, F., D'Errico, M., Visentin, G., Battiston, S., & Caldarelli, G. (2016). Network valuation in financial systems. SSRN Working Paper
-Eisenberg, L., & Noe, T. H. (2001). Systemic risk in financial systems. Management Science, 47(2), 236-249.
-Elsinger, H. (2009). Financial networks, cross holdings, and limited liability. Oesterreichische Nationalbank Working Paper 156
-Rogers, L. C., & Veraart, L. A. (2013). Failure and rescue in an interbank network. Management Science, 59(4), 882-898.
+Barucca, P., Bardoscia, M., Caccioli, F., D'Errico, M., Visentin, G., Battiston, S., & Caldarelli, G. (2016). Network valuation in financial systems. SSRN Working Paper  
+Eisenberg, L., & Noe, T. H. (2001). Systemic risk in financial systems. Management Science, 47(2), 236-249.  
+Elsinger, H. (2009). Financial networks, cross holdings, and limited liability. Oesterreichische Nationalbank Working Paper 156  
+Rogers, L. C., & Veraart, L. A. (2013). Failure and rescue in an interbank network. Management Science, 59(4), 882-898.  
 Puig, M., & Siebenbrunner, C. (2018) Multilayer network valuation with equity conversions. Working Paper
 
 [Eisenberg and Noe (2001)]: https://doi.org/10.1287/mnsc.47.2.236.9835 "Systemic risk in financial systems"
