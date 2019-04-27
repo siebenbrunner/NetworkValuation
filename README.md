@@ -42,7 +42,7 @@ Rogers, L. C., & Veraart, L. A. (2013). Failure and rescue in an interbank netwo
 Puig, M., & Siebenbrunner, C. (2018) Multilayer network valuation with equity conversions. Working Paper
 
 [Eisenberg and Noe (2001)]: https://doi.org/10.1287/mnsc.47.2.236.9835 "Systemic risk in financial systems"
-[Elsinger (2009)]: https://www.researchgate.net/profile/Helmut_Elsinger/publication/46467874_Financial_Networks_Cross_Holdings_and_Limited_Liability/links/0912f50aa0a35b07b5000000/Financial-Networks-Cross-Holdings-and-Limited-Liability.pdf "Financial networks, cross holdings, and limited liability"
+[Elsinger (2009)]: https://ideas.repec.org/p/onb/oenbwp/156.html "Financial networks, cross holdings, and limited liability"
 [Rogers and Veraart (2013)]: https://doi.org/10.1287/mnsc.1120.1569 "Failure and Rescue in an Interbank Network"
 [Barucca et al. (2016)]: http://dx.doi.org/10.2139/ssrn.2795583 "Network valuation in financial systems"
-[Puig and Siebenbrunner (2018)]: https://doi.org/10.1287/mnsc.47.2.236.9835 "Multilayer network valuation with equity conversions"
+[Puig and Siebenbrunner (2018)]: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3225943 "Multilayer network valuation with equity conversions"
