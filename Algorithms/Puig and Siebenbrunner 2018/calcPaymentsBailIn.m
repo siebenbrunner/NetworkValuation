@@ -1,4 +1,4 @@
-%% calcElsingerBailIn
+%% calcPaymentsBailIn
 % Computes a clearing payment vector for a given financial system, using
 % the Elsinger 2009 methodology with seniority structure and bail-in. 
 %
@@ -21,15 +21,16 @@
 %
 % * matP: clearing payment matrix (banks * seniorities)
 % * vecEquityAfterContagion: equity values after contagion
-% * matTheta: matrix (banks x banks x seniorities) of interbank holdings
+% * matTheta: matrix (banks x banks) of interbank holdings
+% * matL: liabilities matrix (banks x banks x seniorities)
 % * vecDefaultedBanks: boolean vector (banks x 1), 1 if bank has defaulted
 % * vecBailedInBanks: boolean vector (banks x 1), 1 if bank has been
 %                     bailed-in
-% Authors: Dissertation candidate and supervisor
-% Last modified: 18.06.2018
+% Authors: Matias Puig and Christoph Siebenbrunner
+% Last modified: 03.09.2018
 %
 
-function [matP, vecEquity, matTheta, vecDefaultedBanks, vecBailedInBanks] = calcElsingerBailIn(vecE,matL, matTheta, numK, funConversion, vecLambdaB, vecLambdaR)
+function [matP, vecEquity, matTheta, matL, vecDefaultedBanks, vecBailedInBanks] = calcPaymentsBailIn(vecE,matL, matTheta, numK, funConversion, vecLambdaB, vecLambdaR)
 
 
 % Define Elsinger 2009 (seniority) variables
@@ -64,7 +65,7 @@ numMaxIterations=100;
 % Use Elsinger 2009 algorithm with seniority structure
 
 while blnLoop
-     [matP, vecEquity, matTheta, vecDefaultedBanks] = calcElsingerSeniority(vecE,matL,matTheta);
+     [matP, vecEquity, vecDefaultedBanks] = calcElsinger(vecE,matL,matTheta);
      
      matPbarOld = matPbar;
      % bail-in-able liabilities total
