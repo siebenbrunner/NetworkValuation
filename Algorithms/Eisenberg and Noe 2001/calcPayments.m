@@ -42,7 +42,7 @@ if strcmp(strCalculationMethod,'Standard')
     vecEquity = vecE + matPi' * vecPbar  - vecPbar;
     while blnLoop
         posDefaulted=matPi'*vecPayments+vecE < vecPbar;
-        vecPayments(posDefaulted)=mat(posDefaulted,posDefaulted)\vecEquity(posDefaulted)+vecPayments(posDefaulted);
+        vecPayments(posDefaulted)=mat(posDefaulted,posDefaulted)\vecEquity(posDefaulted)+vecPbar(posDefaulted);
         posDefaultedNew = matPi'*vecPayments+vecE < vecPbar;
         blnLoop = any(posDefaulted~=posDefaultedNew);
         if any(vecPayments<0)

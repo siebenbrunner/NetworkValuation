@@ -25,11 +25,7 @@ function [matP, vecEquity, vecDefaultedBanks] = calcPayments(vecE,matL,matTheta)
 % Define Elsinger 2009 (seniority) variables
 
 numSeniority = size(matL);
-if length(numSeniority) == 3
-    numSeniority = numSeniority(3);
-else
-    numSeniority = 1;
-end
+numSeniority = numSeniority(3);
 numBanks = length(vecE);
 vecDefaultedBanks = false(numBanks,1);
 vecH = ones(numBanks,1) * numSeniority;

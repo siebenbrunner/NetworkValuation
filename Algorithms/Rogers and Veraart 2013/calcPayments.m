@@ -14,6 +14,9 @@
 % * dblBeta (optional): recovery value on interbank assets (default 1)
 % * strCalculationMethod (optional): 'Standard' for Eisenberg/Noe
 % algorithm (default), 'Iterate' for iterative solution
+% * numMaxIterations (optional): maximum number of iterations. Default 500
+% * dblTolerance (optional): convergence threshold for iterative solution. 
+% Default 0.0001
 %
 % *Outputs*
 %
@@ -25,9 +28,11 @@
 % Last modified: 11.07.2015
 %
 
-function vecPayments = calcPayments(vecE,matL,dblAlpha,dblBeta,strCalculationMethod)
+function vecPayments = calcPayments(vecE,matL,dblAlpha,dblBeta,strCalculationMethod,numMaxIterations,dblTolerance)
 
 %% Get inputs & Declarations
+if nargin < 7 ; dblTolerance = 0.0001; end
+if nargin < 6 ; numMaxIterations = 500; end
 if nargin < 5 ; strCalculationMethod = 'Standard'; end
 if nargin < 4 ; dblBeta = 1; end
 if nargin < 3 ; dblAlpha = 1; end
@@ -50,7 +55,7 @@ if strcmp(strCalculationMethod,'Standard')
     vecEquity = dblAlpha * vecE + dblBeta * matPi' * vecPbar  - vecPbar;
     while blnLoop
         posDefaulted=matPi'*vecPayments+vecE < vecPbar;
-        vecPayments(posDefaulted)=mat(posDefaulted,posDefaulted)\vecEquity(posDefaulted)+vecPayments(posDefaulted);
+        vecPayments(posDefaulted)=mat(posDefaulted,posDefaulted)\vecEquity(posDefaulted)+vecPbar(posDefaulted);
         posDefaultedNew = matPi'*vecPayments+vecE < vecPbar;
         blnLoop = any(posDefaulted~=posDefaultedNew);
         if any(vecPayments<0)
@@ -66,7 +71,6 @@ end
 if strcmp(strCalculationMethod,'Iterate')
     vecPayments = vecPbar;
     blnLoop = true;
-    numMaxIterations = 500;
     iIteration = 1;
     
     while blnLoop
@@ -74,8 +78,8 @@ if strcmp(strCalculationMethod,'Iterate')
         posDefaulted = vecE + matPi' * vecPayments  < vecPbar; 
         vecLiquidatedValue = max(0,dblAlpha * vecE + dblBeta * matPi' * vecPayments);
         vecPnew(posDefaulted) = vecLiquidatedValue(posDefaulted);
-        blnLoop = norm(abs(vecPnew-vecPayments))>0.0001;
-        if iIteration == numMaxIterations
+        blnLoop = norm(abs(vecPnew-vecPayments))>dblTolerance;
+        if iIteration >= numMaxIterations
             warning('No convergence!')
             blnLoop = false;
         end
