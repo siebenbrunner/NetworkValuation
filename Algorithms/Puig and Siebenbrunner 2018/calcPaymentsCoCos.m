@@ -5,12 +5,12 @@
 % *Inputs*
 %
 % * vecE: vector (banks x 1) of other assets
-% * vecLambdaC: vector (banks x 1) of CoCo thresholds
 % * matL: matrix (banks x banks x seniorities) of interbank claims
 % * matTheta: matrix (banks x banks) of interbank holdings
 % * numK: integer, determines the number of the seniority class corresponding to CoCo's 
 % * matConversion: conversion matrix (banks x banks), determines the
 % amount of shares received in case of conversion
+% * vecLambdaC: vector (banks x 1) of CoCo thresholds
 % * vecF: vector (banks x 1) of conversion fractions, the fraction of debt to be converted
 % if the CoCo is triggered
 %

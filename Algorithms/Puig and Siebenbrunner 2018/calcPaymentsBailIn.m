@@ -5,8 +5,6 @@
 % *Inputs*
 %
 % * vecE: vector (banks x 1) of other assets
-% * vecLambdaB: vector (banks x 1) of bail-in thresholds
-% * vecLambdaR: vector (banks x 1) of recapitallization thresholds
 % * matL: matrix (banks x banks x seniorities) of interbank claims
 % * matTheta: matrix (banks x banks) of interbank holdings
 % * numK: integer, determines the number of seniority classes corresponding to bail-in 
@@ -16,6 +14,8 @@
 %                       matPi: matrix (banks x banks x seniorities) of
 %                       relative liabilities
 %               Outputs: conversion matrix (banks x banks x numK)
+% * vecLambdaB: vector (banks x 1) of bail-in thresholds
+% * vecLambdaR: vector (banks x 1) of recapitallization thresholds
 %
 % *Outputs*
 %
