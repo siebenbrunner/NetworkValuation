@@ -11,15 +11,20 @@
 % * matL: matrix (banks x banks) of interbank claims
 % * strCalculationMethod (optional): 'Standard' for Eisenberg/Noe
 % algorithm (default), 'Iterate' for iterative solution
+% * numMaxIterations (optional): maximum number of iterations. Default 500
+% * dblTolerance (optional): convergence threshold for iterative solution. 
+% Default 0.0001
 %
 % *Outputs*
 %
 % * vecPayments: clearing payment vector
 %
 
-function vecPayments = calcPayments(vecE,matL,strCalculationMethod)
+function vecPayments = calcPayments(vecE,matL,strCalculationMethod,numMaxIterations,dblTolerance)
 
 %% Get inputs & Declarations
+if nargin < 5 ; dblTolerance = 0.0001; end
+if nargin < 4 ; numMaxIterations = 500; end
 if nargin < 3 ; strCalculationMethod = 'Standard'; end
 
 %%%
@@ -56,7 +61,6 @@ end
 if strcmp(strCalculationMethod,'Iterate')
     vecPayments = vecPbar;
     blnLoop = true;
-    numMaxIterations = 500;
     iIteration = 1;
     
     while blnLoop
@@ -64,8 +68,8 @@ if strcmp(strCalculationMethod,'Iterate')
         posDefaulted = vecE + matPi' * vecPayments  < vecPbar; 
         vecLiquidatedValue = max(0,vecE + matPi' * vecPayments);
         vecPnew(posDefaulted) = vecLiquidatedValue(posDefaulted);
-        blnLoop = norm(abs(vecPnew-vecPayments))>0.0001;
-        if iIteration == numMaxIterations
+        blnLoop = norm(abs(vecPnew-vecPayments))>dblTolerance;
+        if iIteration >= numMaxIterations
             warning('No convergence!')
             blnLoop = false;
         end

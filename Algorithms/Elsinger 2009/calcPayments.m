@@ -7,13 +7,12 @@
 % * vecE: vector (banks x 1) of other assets
 % * matL: matrix (banks x banks x seniorities) of interbank claims
 % * matTheta: matrix (banks x banks) of interbank holdings
-
+% 
 %
 % *Outputs*
 %
-% * matP: clearing payment matrix (banks * seniorities)
-% * vecEquityAfterContagion: equity values after contagion
-% * matTheta: matrix (banks x banks x seniorities) of interbank holdings
+% * matP: clearing payment matrix (banks x seniorities)
+% * vecEquity: equity values after contagion
 % * vecDefaultedBanks: boolean vector (banks x 1), 1 if bank has defaulted
 
 % Authors: Matias Puig and Christoph Siebenbrunner
